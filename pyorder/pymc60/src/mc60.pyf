@@ -1,0 +1,92 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module mc60module
+  interface
+
+     subroutine mc60ad(n,lirn,irn,icptr,icntl,iw,info)
+       integer optional, check((len(icptr)-1)>=n), intent(in), depend(icptr) :: n=(len(icptr)-1)
+       integer optional, check(len(irn)>=lirn), intent(in), depend(irn) :: lirn=len(irn)
+       integer dimension(lirn), intent(inplace) :: irn
+       integer dimension(n + 1), intent(inplace) :: icptr
+       integer dimension(2), intent(in) :: icntl
+       integer dimension(n), intent(hide), intent(cache), depend(n) :: iw
+       integer dimension(4), intent(out) :: info
+     end subroutine mc60ad
+
+     subroutine mc60bd(n,lirn,irn,icptr,nsup,svar,vars,iw)
+       integer optional, check((len(icptr)-1)>=n), intent(in), depend(icptr) :: n=(len(icptr)-1)
+       integer optional, check(len(irn)>=lirn), intent(in), depend(irn) :: lirn=len(irn)
+       integer dimension(lirn), intent(inplace) :: irn
+       integer dimension(n + 1), intent(inplace) :: icptr
+       integer, intent(out) :: nsup
+       integer dimension(n), intent(out), depend(n) :: svar
+       integer dimension(n), intent(out), depend(n) :: vars
+       integer dimension(2 * n), intent(hide), intent(cache), depend(n) :: iw
+     end subroutine mc60bd
+
+     subroutine mc60cd(n,nsup,lirn,irn,icptr,vars,jcntl,permsv,weight,pair,info,iw,w)
+       integer, intent(in) :: n
+       integer optional, check(len(permsv)>=nsup), intent(in), depend(permsv) :: nsup=len(permsv)
+       integer optional, check(len(irn)>=lirn), intent(in), depend(irn) :: lirn=len(irn)
+       integer dimension(lirn), intent(in) :: irn
+       integer dimension(nsup + 1), intent(in), depend(nsup) :: icptr
+       integer dimension(nsup), intent(in), depend(nsup) :: vars
+       integer dimension(2), intent(in) :: jcntl
+       integer dimension(nsup), intent(inplace) :: permsv
+       double precision dimension(2), intent(in) :: weight
+       integer dimension(2,nsup/2), intent(inplace) :: pair
+       integer dimension(4), intent(out) :: info
+       integer dimension(3 * nsup + 1), intent(hide,cache), depend(nsup) :: iw
+       double precision dimension(nsup), intent(hide,cache), depend(nsup) :: w
+     end subroutine mc60cd
+
+     subroutine mc60dd(n,nsup,svar,vars,permsv,perm,possv)
+       integer optional, check(len(svar)>=n), intent(in), depend(svar) :: n=len(svar)
+       integer optional, check(len(permsv)>=nsup), intent(in), depend(permsv) :: nsup=len(permsv)
+       integer dimension(n), intent(in) :: svar
+       integer dimension(nsup), intent(in), depend(nsup) :: vars
+       integer dimension(nsup), intent(in) :: permsv
+       integer dimension(n), intent(out), depend(n) :: perm
+       integer dimension(nsup), intent(out), depend(nsup) :: possv
+     end subroutine mc60dd
+
+     subroutine mc60ed(n,nsup,lirn,irn,icptr,svar,vars,permsv,perm,iw)
+       integer optional, check(len(svar)>=n), intent(in), depend(svar) :: n=len(svar)
+       integer optional, check((len(icptr)-1)>=nsup), intent(in), depend(icptr) :: nsup=(len(icptr)-1)
+       integer optional, check(len(irn)>=lirn), intent(in), depend(irn) :: lirn=len(irn)
+       integer dimension(lirn), intent(in), :: irn
+       integer dimension(nsup + 1), intent(in) :: icptr
+       integer dimension(n), intent(in) :: svar
+       integer dimension(nsup), intent(in), depend(nsup) :: vars
+       integer dimension(nsup), intent(inplace), depend(nsup) :: permsv
+       integer dimension(n), intent(out), depend(n) :: perm
+       integer dimension(nsup), intent(hide), intent(cache), depend(nsup) :: iw
+     end subroutine mc60ed
+
+     subroutine mc60fd(n,nsup,lirn,irn,icptr,vars,permsv,iw,rinfo)
+       integer, intent(in) :: n
+       integer optional, check(len(permsv)>=nsup), intent(in), depend(permsv) :: nsup=len(permsv)
+       integer optional, check(len(irn)>=lirn), intent(in), depend(irn) :: lirn=len(irn)
+       integer dimension(lirn), intent(in) :: irn
+       integer dimension(nsup + 1), intent(in), depend(nsup) :: icptr
+       integer dimension(nsup), intent(in), depend(nsup) :: vars
+       integer dimension(nsup), intent(in) :: permsv
+       integer dimension(2 * nsup + 1), intent(hide,cache), depend(nsup) :: iw
+       double precision dimension(4), intent(out) :: rinfo
+     end subroutine mc60fd
+
+     subroutine mc60gd(n,nsup,lirn,irn,icptr,vars,permsv,iw,rinfo)
+       integer, intent(in) :: n
+       integer optional, check((len(icptr)-1)>=nsup), intent(in), depend(icptr) :: nsup=(len(icptr)-1)
+       integer optional, check(len(irn)>=lirn), intent(in), depend(irn) :: lirn=len(irn)
+       integer dimension(lirn), intent(in) :: irn
+       integer dimension(nsup + 1), intent(in) :: icptr
+       integer dimension(nsup), intent(in), depend(nsup) :: vars
+       integer dimension(nsup), intent(in), depend(nsup) :: permsv
+       integer dimension(nsup), intent(hide), intent(cache), depend(nsup) :: iw
+       double precision dimension(4), intent(out) :: rinfo
+     end subroutine mc60gd
+
+  end interface
+end python module mc60module
