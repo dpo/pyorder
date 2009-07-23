@@ -57,15 +57,6 @@ def setup_package():
     sys.path.insert(0,os.path.join(local_path,'pyorder')) # to retrieve version
 
     try:
-        #extra_link_args=[]
-        #pymc60 = Extension(
-        #             name='mc60module',
-        #             sources=['Src/mc60.pyf', 'Src/mc60ad.f'],
-        #             libraries=[],
-        #             library_dirs=[],
-        #             include_dirs=['Src'],
-        #             extra_link_args=extra_link_args)
-
         setup(
             name = 'pyorder',
             author = "Dominique Orban",
@@ -80,9 +71,6 @@ def setup_package():
             classifiers=filter(None, CLASSIFIERS.split('\n')),
             platforms = ["Windows", "Linux", "Solaris", "Mac OS-X", "Unix"],
             configuration=configuration,
-            #ext_modules = [pymc60],
-            #package_dir={'pyorder':'Lib'},
-            #packages = ['pyorder'],
             )
     finally:
         del sys.path[0]

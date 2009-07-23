@@ -22,17 +22,25 @@
 Provides access to sparse linear systems described in Harwell-Boeing or
 Rutherford-Boeing format. This module exposes the two classes
 HarwellBoeingMatrix and RutherfordBoeingData. For more information, see
+the references below.
 
- [1] I.S. Duff, R.G. Grimes and J.G. Lewis,
-     Sparse Matrix Test Problems, ACM Transactions on Mathematical Software,
-     15(1), p.1-14, 1989
- [2] ftp://ftp.cerfacs.fr/pub/harwell_boeing/userguide.ps.Z
- [3] http://math.nist.gov/MatrixMarket/data/Harwell-Boeing
- [4] The Rutherford-Boeing Sparse Matrix Collection,
-     I.S. Duff, R.G. Grimes and J.G. Lewis, Technical Report RAL-TR-97-031,
-     Rutherford Appleton Laboratory, Chilton, OX, UK, 1997.
-     (ftp://ftp.numerical.rl.ac.uk/pub/reports/duglRAL97031.pdf)
- [5] http://www.cerfacs.fr/algor/Softs/RB
+References
+----------
+
+.. [1] I.S. Duff, R.G. Grimes and J.G. Lewis,
+       Sparse Matrix Test Problems, ACM Transactions on
+       Mathematical Software, 15(1), p.1-14, 1989
+
+.. [2] `<ftp://ftp.cerfacs.fr/pub/harwell_boeing/userguide.ps.Z>`_
+
+.. [3] `<http://math.nist.gov/MatrixMarket/data/Harwell-Boeing>`_
+
+.. [4] The Rutherford-Boeing Sparse Matrix Collection,
+       I.S. Duff, R.G. Grimes and J.G. Lewis, Technical Report RAL-TR-97-031,
+       Rutherford Appleton Laboratory, Chilton, OX, UK, 1997.
+       (`<ftp://ftp.numerical.rl.ac.uk/pub/reports/duglRAL97031.pdf>`_)
+
+.. [5] `<http://www.cerfacs.fr/algor/Softs/RB>`_
 
 Dominique Orban, GERAD and Ecole Polytechnique de Montreal, 2007
 <dominique.orban@gerad.ca>
@@ -51,18 +59,21 @@ class HarwellBoeingMatrix:
     (typically when the matrix itself is stored in finite-element format), in
     which case self.rhs has shape (nnzero, nrhs).
 
-    Note that the matrix indices are zero-based, i.e., row indices range from
-    0 through nrow-1 and column indices range from 0 through ncol-1.
+    Note that the matrix indices are zero-based, i.e., row indices range
+    from 0 through nrow-1 and column indices range from 0 through ncol-1.
 
     The matrix can be subsequently converted to triple format with
         (row, col) = self.find()
 
-    Currently accepted keyword arguments are:
+    :keywords:
 
-      patternOnly   do not read matrix element values     (False)
-      readRhs       read right-hand sides, if any         (False)
-      readGuess     read starting guess, if any           (False)
-      realSol       read solution vector, if any          (False)
+        :patternOnly:  do not read matrix element values (False)
+     
+        :readRhs:      read right-hand sides, if any (False)
+     
+        :readGuess:    read starting guess, if any (False)
+     
+        :realSol:      read solution vector, if any (False) 
     """
     def __init__( self, fname, **kwargs ):
         
@@ -203,9 +214,9 @@ class RutherfordBoeingData( HarwellBoeingMatrix ):
     The data can be subsequently converted to triple format with
         (row, col) = self.find()
 
-    Currently accepted keyword arguments are:
+    :keywords:
 
-      patternOnly   do not read data values     (False)
+        :patternOnly:  do not read data values (False)
     """
 
     def readMatrix( self, fp, **kwargs ):
