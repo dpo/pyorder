@@ -3,7 +3,7 @@
 import numpy as np
 from pyorder.pymc60 import sloan, rcmk
 from pyorder.tools.hrb import HarwellBoeingMatrix, RutherfordBoeingData
-from sparsetools import FastSpy
+from pyorder.tools.spy import FastSpy
 import pylab
 import sys
 

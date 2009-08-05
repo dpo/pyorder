@@ -5,8 +5,7 @@ The functions in this module compute a symmetric permutation of a sparse
 symmetric matrix so as to reduce its profile, wavefront, or bandwidth via
 Sloan's method [SLO]_ or the reverse Cuthill-McKee method [CM]_.
 
-References
-----------
+**References**
 
 .. [CM] E. Cuthill and J. McKee, *Reducing the bandwidth of sparse symmetric
         matrices* In Proc. 24th Nat. Conf. ACM, pages 157-172, 1969.
@@ -19,7 +18,7 @@ References
          sparse matrices*, International Journal of Numerical Methods in
          Engineering, **23**, pp. 239--251, 1986.
 
-dominique.orban@gerad.ca
+.. moduleauthor:: dominique.orban@gerad.ca
 """
 
 __docformat__ = 'restructuredtext'
@@ -64,7 +63,7 @@ def sloan(n, rowind, colptr, icntl=[0,6], weight=[2,1]):
                  to apply the method twice, with either [2,1] and [16,1], or
                  with [1,2] and [16,1], and to retain the best result.
 
-    :return values:
+    :returns:
 
         :perm: An integer array of length n giving the variable permutation. If
                irow and jcol are two integer arrays describing the pattern of
@@ -112,7 +111,7 @@ def rcmk(n, rowind, colptr, icntl=[0,6]):
                 is > 0, it gives the unit number (in the Fortran sense) where
                 diagonostic messages are output.
 
-    :return values:
+    :returns:
 
         :perm: An integer array of length n giving the variable permutation. If
                irow and jcol are two integer arrays describing the pattern of

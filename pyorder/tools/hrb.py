@@ -24,26 +24,24 @@ Rutherford-Boeing format. This module exposes the two classes
 HarwellBoeingMatrix and RutherfordBoeingData. For more information, see
 the references below.
 
-References
-----------
+**References**
 
-.. [1] I.S. Duff, R.G. Grimes and J.G. Lewis,
-       Sparse Matrix Test Problems, ACM Transactions on
-       Mathematical Software, 15(1), p.1-14, 1989
+.. [DGL] I.S. Duff, R.G. Grimes and J.G. Lewis,
+         Sparse Matrix Test Problems, ACM Transactions on
+         Mathematical Software, 15(1), p.1-14, 1989
 
-.. [2] `<ftp://ftp.cerfacs.fr/pub/harwell_boeing/userguide.ps.Z>`_
+.. [HBUG] `<ftp://ftp.cerfacs.fr/pub/algo/matrices/harwell_boeing/userguide.ps.Z>`_
 
-.. [3] `<http://math.nist.gov/MatrixMarket/data/Harwell-Boeing>`_
+.. [HB] `<http://math.nist.gov/MatrixMarket/data/Harwell-Boeing>`_
 
-.. [4] The Rutherford-Boeing Sparse Matrix Collection,
-       I.S. Duff, R.G. Grimes and J.G. Lewis, Technical Report RAL-TR-97-031,
-       Rutherford Appleton Laboratory, Chilton, OX, UK, 1997.
-       (`<ftp://ftp.numerical.rl.ac.uk/pub/reports/duglRAL97031.pdf>`_)
+.. [RBC] The Rutherford-Boeing Sparse Matrix Collection,
+        I.S. Duff, R.G. Grimes and J.G. Lewis, Technical Report RAL-TR-97-031,
+        Rutherford Appleton Laboratory, Chilton, OX, UK, 1997.
+        (`<ftp://ftp.numerical.rl.ac.uk/pub/reports/duglRAL97031.pdf>`_)
 
-.. [5] `<http://www.cerfacs.fr/algor/Softs/RB>`_
+.. [RB] `<http://www.cerfacs.fr/algor/Softs/RB>`_
 
-Dominique Orban, GERAD and Ecole Polytechnique de Montreal, 2007
-<dominique.orban@gerad.ca>
+.. moduleauthor:: dominique.orban@gerad.ca
 """
 import numpy
 import FortranFormat as F
@@ -158,7 +156,7 @@ class HarwellBoeingMatrix:
         else:                     # Finite-element format, not assembled
             vallen = neltvl
 
-        self.val = numpy.empty(vallen, dataType)
+        self.val = numpy.empty(vallen, dtype=dataType)
         self.readArray( fp, self.val, vallen, valfmt )
         
         # Read right-hand sides, if any
@@ -266,7 +264,7 @@ class RutherfordBoeingData( HarwellBoeingMatrix ):
             # Read values
             nreal = self.ne
             if self.neltvl > 0: nreal = self.neltvl
-            self.val = numpy.empty(nreal, dataType)
+            self.val = numpy.empty(nreal, dtype=dataType)
             self.readArray( fp, self.val, nreal, valfmt )
             
         else:

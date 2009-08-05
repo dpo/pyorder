@@ -5,6 +5,26 @@ def coord2csc(ncol, irow, jcol, val=None):
     Convert a sparse matrix in triple format into compressed sparse column
     (csc) format. To convert to compressed sparse row (csr) format, substitute
     the number of rows for ncol and swap irow and jcol.
+
+    :arguments:
+
+        :ncol: Number of columns in the input matrix.
+        :irow: Integer Numpy array of length nnz containing the row indices of
+               the nonzeros.
+        :jcol: Integer Numpy array of length nnz containing the column indices
+               of the nonzeros.
+
+    :keywords:
+
+        :val: Numpy array of length nnz containing the numerical values.
+
+    :returns:
+
+        :rowind: Integer Numpy array of length nnz containing the row indices
+                 of the nonzeros in each column.
+        :colptr: Integer Numpy array of length ncol+1 containing the positions
+                 in rowind of the start of each column.
+        :values: Numpy array of length nnz containing the numerical values.
     """
     nnz = len(irow)
     if len(jcol) != nnz:
@@ -41,3 +61,34 @@ def coord2csc(ncol, irow, jcol, val=None):
         return (rowind, colptr)
     else:
         return (rowind, colptr, values)
+
+
+def csc2coord(rowind, colptr):
+    """
+    Convert a sparse matrix in compressed sparse column (csc) format into
+    triple format. To convert to compressed sparse row (csr) format, swap irow
+    and jcol.
+
+    :arguments:
+
+        :rowind: Integer Numpy array of length nnz containing the row indices
+                 of the nonzeros in each column.
+        :colptr: Integer Numpy array of length ncol+1 containing the positions
+                 in rowind of the start of each column.
+
+    :returns:
+
+        :irow: Integer Numpy array of length nnz containing the row indices of
+               the nonzeros.
+        :jcol: Integer Numpy array of length nnz containing the column indices
+               of the nonzeros.
+    """
+    nnz = len(rowind)
+    ncol = len(colptr)-1
+    irow = np.empty(nnz, np.int)
+    jcol = np.empty(nnz, np.int)
+    for i in range(ncol):
+        for j in range(colptr[i], colptr[i+1]):
+            jcol[j] = i
+            irow[j] = rowind[j]
+    return (irow,jcol)
