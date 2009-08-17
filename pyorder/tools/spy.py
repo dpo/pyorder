@@ -4,6 +4,19 @@ Plot the sparsity pattern of a sparse matrix.
 import pylab
 import numpy
 
+__docformat__ = 'restructuredtext'
+
+def spy(A, **kwargs):
+    """
+    Plot the sparsity pattern of a sparse matrix A in the PySparse linked-list
+    format. See `FastSpy()` for a description of the arguments.
+    """
+    nrow, ncol = A.shape()
+    (val, irow, jcol) = A.find()
+    if 'sym' not in kwargs:
+        kwargs['sym'] = (A.issym != 0)
+    return FastSpy(nrow, ncol, irow, jcol, **kwargs)
+
 def FastSpy(nrow, ncol, irow, jcol, **kwargs):
     """
     To plot the sparsity pattern of a sparse matrix in coordinate format.
