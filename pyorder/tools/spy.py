@@ -4,6 +4,7 @@ Plot the sparsity pattern of a sparse matrix.
 import pylab
 import numpy
 
+__docformat__ = 'restructuredtext'
 
 def spy(A, patternonly=True, **kwargs):
     """
