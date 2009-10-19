@@ -4,6 +4,42 @@ Plot the sparsity pattern of a sparse matrix.
 import pylab
 import numpy
 
+
+def spy(A, patternonly=True, **kwargs):
+    """
+    To plot the sparsity pattern of a sparse matrix in linked-list format.
+
+    :arguments:
+
+        :A:  Input matrix in linked-list format.
+
+        :patternonly:  If True, only output a black and white sparsity pattern. If set
+                       to False, colorize the plot according to the magnitude of the
+                       nonzero elements.
+
+    :keywords:
+
+        :ax: A Pylab Axes instance used to plot the sparsity pattern. If none
+             is given, this function returns an Axes instance.
+
+        :title: String to be used as title for the plot. If none is given,
+                the title defaults to giving the order of the matrix and the
+                number of nonzero elements.
+
+        :comment: Comment to be appended to the default plot title in case no
+                  title is supplied.
+
+        :showtitle: Show or hide plot title.
+    """
+    nrow, ncol = A.shape
+    sym = (A.issym != 0)
+    (values,irow,jcol) = A.find()
+    if patternonly:
+        return FastSpy(nrow, ncol, irow, jcol, sym=sym, **kwargs)
+    else:
+        return FastSpy(nrow, ncol, irow, jcol, sym=sym, val=values, **kwargs)
+
+
 def FastSpy(nrow, ncol, irow, jcol, **kwargs):
     """
     To plot the sparsity pattern of a sparse matrix in coordinate format.
