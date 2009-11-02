@@ -14,9 +14,9 @@ def spy(A, patternonly=True, **kwargs):
 
         :A:  Input matrix in linked-list format.
 
-        :patternonly:  If True, only output a black and white sparsity pattern. If set
-                       to False, colorize the plot according to the magnitude of the
-                       nonzero elements.
+        :patternonly:  If True, only output a black and white sparsity pattern.
+                       If set to False, colorize the plot according to the
+                       magnitude of the nonzero elements.
 
     :keywords:
 
@@ -91,8 +91,9 @@ def FastSpy(nrow, ncol, irow, jcol, **kwargs):
 
     if val is not None:
         # Produce a scatter plot
-        mag = 100.0/max(abs( numpy.asarray(val) ))
-        s = 100.0 * abs(val)/numpy.linalg.norm(val,ord=numpy.infty)
+        absval = numpy.abs(numpy.asarray(val))
+        mag = 100.0/numpy.max(absval)
+        s = 100.0 * absval/numpy.linalg.norm(val,ord=numpy.infty)
         ax.scatter(jcol, irow, s, s, marker='o', alpha=0.75)
         if sym:
             ax.scatter(irow, jcol, s, s, marker='o', alpha=0.75)

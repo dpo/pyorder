@@ -2,14 +2,20 @@
 
 def configuration(parent_package='',top_path=None):
     import numpy
+    import ConfigParser
+    import os
     from numpy.distutils.misc_util import Configuration
+
+    # Read relevant PyOrder-specific configuration options.
+    pyorder_config = ConfigParser.SafeConfigParser()
+    pyorder_config.read(os.path.join(top_path, 'site.cfg'))
+    hsl_dir = pyorder_config.get('HSL', 'hsl_dir')
 
     config = Configuration('pymc21', parent_package, top_path)
 
-
     config.add_extension(
         name='mc21module',
-        sources=['src/mc21.pyf', 'src/mc21d.f'],
+        sources=['src/mc21.pyf', os.path.join(hsl_dir,'mc21ad.f')],
         libraries=[],
         library_dirs=[],
         include_dirs=['src'],

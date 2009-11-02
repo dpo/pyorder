@@ -2,14 +2,20 @@
 
 def configuration(parent_package='',top_path=None):
     import numpy
+    import ConfigParser
+    import os
     from numpy.distutils.misc_util import Configuration
+
+    # Read relevant PyOrder-specific configuration options.
+    pyorder_config = ConfigParser.SafeConfigParser()
+    pyorder_config.read(os.path.join(top_path, 'site.cfg'))
+    hsl_dir = pyorder_config.get('HSL', 'hsl_dir')
 
     config = Configuration('pymc60', parent_package, top_path)
 
-
     config.add_extension(
         name='mc60module',
-        sources=['src/mc60.pyf', 'src/mc60ad.f'],
+        sources=['src/mc60.pyf', os.path.join(hsl_dir,'mc60ad.f')],
         libraries=[],
         library_dirs=[],
         include_dirs=['src'],
