@@ -6,7 +6,7 @@ Requirements
 1. NumPy
 2. The Harwell Subroutine Library subroutines MC21 and MC60. More interfaces
    may be added as needed. Head to
-   `http://hsl.rl.ac.uk/hsl2007/hsl20074researchers.html`_ for license
+   http://hsl.rl.ac.uk/hsl2007/hsl20074researchers.html for license
    terms and for obtaining the software. Edit site.cfg to specify the location
    of the source files.
 
