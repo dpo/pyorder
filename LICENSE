@@ -1,5 +1,5 @@
-    PyKrylov --- A Library of Krylov Methods in Pure Python
-    Copyright (C) 2008  Dominique Orban.
+    PyOrder --- A Library of Sparse Matrix Reordering Methods in Python
+    Copyright (C) 2009  Dominique Orban.
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
