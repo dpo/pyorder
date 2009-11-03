@@ -22,3 +22,14 @@ The :mod:`hrb` Module
    :inherited-members:
    :undoc-members:
 
+The :mod:`mtx` Module
+=====================
+
+.. automodule:: pyorder.tools.mtx
+
+.. autoclass:: MatrixMarketMatrix
+   :show-inheritance:
+   :members:
+   :inherited-members:
+   :undoc-members:
+

@@ -1,5 +1,6 @@
 """
 Read a sparse matrix in Matrix Market format
+
 .. moduleauthor: D. Orban <dominique.orban@gerad.ca>
 """
 
@@ -7,6 +8,14 @@ import numpy as np
 from string import atoi, atof
 
 class MatrixMarketMatrix:
+    """
+    A MatrixMarketMatrix object represents a sparse matrix read from a file.
+    This file must describe a sparse matrix in the MatrixMarket file format.
+
+    See http://math.nist.gov/MatrixMarket for more information.
+
+    Example: mat = MatrixMarketMatrix('1138bus.mtx')
+    """
 
     def __init__(self, fname, **kwargs):
         self.comments= ''
@@ -87,6 +96,11 @@ class MatrixMarketMatrix:
         return k
 
     def find(self):
+        """
+        Return the sparse matrix in triple format (val,irow,jcol). If the
+        matrix data type is `None`, i.e., only the matrix sparsity pattern
+        is available, this method returns (irow,jcol).
+        """
         if self.dtype is not None:
             return (self.values,self.irow,self.jcol)
         return (self.irow,self.jcol)
