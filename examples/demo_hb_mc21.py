@@ -8,8 +8,6 @@ import sys
 import numpy as np
 from pyorder.pymc21.pymc21 import nonzerodiag
 from pyorder.tools.hrb import HarwellBoeingMatrix, RutherfordBoeingData
-from pyorder.tools.spy import FastSpy
-import pylab
 
 if len(sys.argv) < 2:
     sys.stderr.write('Supply input matrix as argument\n')
@@ -24,11 +22,17 @@ if M.nrow != M.ncol:
     sys.exit(1)
 
 perm, nzdiag = nonzerodiag(M.nrow, M.ind, M.ip)
+print 'Number of nonzeros on diagonal after reordering: ', nzdiag
 
-(irow, jcol) = M.find()
-left = pylab.subplot(121)
-FastSpy(M.nrow, M.ncol, irow, jcol, sym=M.issym, ax=left.get_axes())
+try:
+    from pyorder.tools.spy import FastSpy
+    import pylab
+    (irow, jcol) = M.find()
+    left = pylab.subplot(121)
+    FastSpy(M.nrow, M.ncol, irow, jcol, sym=M.issym, ax=left.get_axes())
 
-right = pylab.subplot(122)
-FastSpy(M.nrow, M.ncol, perm[irow], jcol, sym=M.issym, ax=right.get_axes())
-pylab.show()
+    right = pylab.subplot(122)
+    FastSpy(M.nrow, M.ncol, perm[irow], jcol, sym=M.issym, ax=right.get_axes())
+    pylab.show()
+except:
+    pass

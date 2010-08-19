@@ -8,16 +8,14 @@ import sys
 from pyorder.pymc60 import mc60module
 import numpy as np
 from pyorder.tools.hrb import HarwellBoeingMatrix, RutherfordBoeingData
-from sparsetools import FastSpy
-import pylab
 
 if len(sys.argv) < 2:
     sys.stderr.write('Data file name must be supplied\n')
     sys.exit(1)
 
 fname = sys.argv[1]
-M = HarwellBoeingMatrix(fname, patternOnly=True, readRhs=False)
-#M = RutherfordBoeingData(fname, patternOnly=True, readRhs=False)
+#M = HarwellBoeingMatrix(fname, patternOnly=True, readRhs=False)
+M = RutherfordBoeingData(fname, patternOnly=True, readRhs=False)
 
 if M.nrow != M.ncol:
     sys.stderr.write('Input matrix must be square\n')
@@ -67,15 +65,20 @@ print 'The maximum wavefront is ', rinfo[1]
 print 'The semibandwidth is ', rinfo[2]
 print 'The root-mean-square wavefront is ', rinfo[3]
 
-# Plot original matrix
-(irow, jcol) = M.find()
-left = pylab.subplot(121)
-right = pylab.subplot(122)
-FastSpy(M.nrow, M.ncol, irow, jcol, sym=M.issym,
-        ax=left.get_axes(), title='Original')
+try:
+    import pylab
+    from sparsetools import FastSpy
+    # Plot original matrix
+    (irow, jcol) = M.find()
+    left = pylab.subplot(121)
+    right = pylab.subplot(122)
+    FastSpy(M.nrow, M.ncol, irow, jcol, sym=M.issym,
+            ax=left.get_axes(), title='Original')
 
-# Apply permutation and plot reordered matrix
-perm -= 1   # Convert to 0-based indexing
-FastSpy(M.nrow, M.ncol, perm[irow], perm[jcol], sym=M.issym,
-        ax=right.get_axes(), title='Reordered')
-pylab.show()
+    # Apply permutation and plot reordered matrix
+    perm -= 1   # Convert to 0-based indexing
+    FastSpy(M.nrow, M.ncol, perm[irow], perm[jcol], sym=M.issym,
+            ax=right.get_axes(), title='Reordered')
+    pylab.show()
+except:
+    pass
