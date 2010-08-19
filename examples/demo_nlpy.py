@@ -1,4 +1,10 @@
-from nlpy.model import AmplModel
+
+try:
+    from nlpy.model import AmplModel
+except:
+    msg='NLPy is required to run this demo. See http://nlpy.sf.net'
+    raise RuntimeError, msg
+
 from pyorder.tools import coord2csc
 from pyorder.pymc60 import sloan, rcmk
 from pyorder.tools.spy import FastSpy
@@ -29,5 +35,5 @@ right = plt.subplot(133)
 FastSpy(nlp.n, nlp.n, perm2[irow], perm2[jcol], sym=True,
         ax=right.get_axes(), title='Sloan (semibandwidth=%d)' % rinfo2[2])
 
-plt.savefig('mpvc.pdf',bbox_inches='tight')
-#plt.show()
+#plt.savefig('mpvc.pdf',bbox_inches='tight')
+plt.show()
