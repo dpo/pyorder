@@ -47,7 +47,7 @@ examples. Change to the `examples` directory and type::
     % bunzip2 commanche_dual.rb.bz2
     % python demo_hb_mc60.py commanche_dual.rb
     % python demo_hb_mc60_pro.py commanche_dual.rb
-    % python demo_hc_mc21.py commanche_dual.rb
+    % python demo_hb_mc21.py commanche_dual.rb
 
 If Matplotlib is installed, some sparsity pattern plots should pop up.
 
