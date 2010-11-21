@@ -15,7 +15,7 @@ def configuration(parent_package='',top_path=None):
 
     config.add_extension(
         name='mc60module',
-        sources=['src/mc60.pyf', os.path.join(hsl_dir,'mc60ad.f')],
+        sources=['src/mc60.pyf', os.path.join(hsl_dir,'mc60d','mc60d.f')],
         libraries=[],
         library_dirs=[],
         include_dirs=['src'],
@@ -26,7 +26,4 @@ def configuration(parent_package='',top_path=None):
 
 if __name__ == '__main__':
     from numpy.distutils.core import setup
-    setup(
-        #package_dir={'pymc60':'Lib'},
-        #packages = ['pymc60'],
-        **configuration(top_path='').todict())
+    setup(**configuration(top_path='').todict())

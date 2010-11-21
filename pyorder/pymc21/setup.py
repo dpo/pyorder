@@ -15,7 +15,7 @@ def configuration(parent_package='',top_path=None):
 
     config.add_extension(
         name='mc21module',
-        sources=['src/mc21.pyf', os.path.join(hsl_dir,'mc21ad.f')],
+        sources=['src/mc21.pyf', os.path.join(hsl_dir,'mc21d','mc21d.f')],
         libraries=[],
         library_dirs=[],
         include_dirs=['src'],
