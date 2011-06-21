@@ -9,8 +9,8 @@ Requirements
    may be added as needed. Head to
    http://hsl.rl.ac.uk/hsl2007/hsl20074researchers.html for license
    terms and for obtaining the software. You need to download the double
-   precision real version. The source files must be (re)named mc21ad.f and
-   mc60ad.f. Edit site.cfg to specify the location of the source files.
+   precision real version.
+   Edit site.cfg to specify the location of the source files.
 
 
 Installation
