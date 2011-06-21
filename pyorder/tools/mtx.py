@@ -113,7 +113,7 @@ if __name__ == '__main__':
     print 'type: ', A.dtype
     print 'symmetric, Hermitian, skew: ', A.symmetric, A.Hermitian, A.skewsym
     print 'comments:' ; print A.comments
-    
+
     from pyorder.tools.spy import FastSpy
     import matplotlib.pyplot as plt
     fig = plt.figure()
