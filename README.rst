@@ -11,6 +11,9 @@ Requirements
    terms and for obtaining the software. You need to download the double
    precision real version.
    Edit site.cfg to specify the location of the source files.
+3. If you plan to read and write matrices in Harwell-Boeing or
+   Rutherford-Boeing format, you will need to install `fortranformat`,
+   available from PyPi.
 
 
 Installation
