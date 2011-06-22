@@ -44,7 +44,7 @@ the references below.
 .. moduleauthor:: dominique.orban@gerad.ca
 """
 import numpy
-import FortranFormat as F
+from conversion import csc2coord, coord2csc
 from fortranformat import FortranRecordReader, FortranRecordWriter
 
 class HarwellBoeingMatrix:
@@ -90,14 +90,7 @@ class HarwellBoeingMatrix:
 
     def find(self):
         if self.ip is None or self.ind is None: return (None,None)
-        row = numpy.empty(self.nnzero, numpy.int)
-        col = numpy.empty(self.nnzero, numpy.int)
-        # Adjust indices to 0-based scheme
-        for i in range(self.ncol):
-            for j in range(self.ip[i], self.ip[i+1]):
-                col[j] = i
-                row[j] = self.ind[j]
-        return (row,col)
+        return csc2coord(self.ind, self.ip)
 
     def _Old_readArray(self, fp, which, nelm, format):
         fmt = F.FortranFormat(str(format))
@@ -239,6 +232,11 @@ class RutherfordBoeingData(HarwellBoeingMatrix):
         :patternOnly:  do not read data values (False)
     """
 
+    def __init__(self, fname, **kwargs):
+
+        HarwellBoeingMatrix.__init__(self, fname, **kwargs)
+        self.transposed = kwargs.get('transposed', False)
+
     def readMatrix(self, fp, **kwargs):
         self.patternOnly = kwargs.get('patternOnly', False)
         fRead = self.fortranRead
@@ -333,6 +331,36 @@ class RutherfordBoeingData(HarwellBoeingMatrix):
             self.nnzero = self.nauxd
 
         return
+
+    def _mul(self, other):
+        # No type or dimension checking for now...
+        y = numpy.zeros(self.nrow)
+        for col in range(self.ncol):
+            for k in range(self.ip[col],self.ip[col+1]):
+                row = self.ind[k]
+                val = self.val[k]
+                y[row] += val * other[col]
+                if self.issym and row != col:
+                    y[col] += val * other[row]
+        return y
+
+    def _rmul(self, other):
+        # No type or dimension checking for now...
+        y = numpy.zeros(self.ncol)
+        for col in range(self.ncol):
+            for k in range(self.ip[col],self.ip[col+1]):
+                row = self.ind[k]
+                val = self.val[k]
+                y[col] += val * other[row]
+                if self.issym and row != col:
+                    y[row] += val * other[col]
+        return y
+
+    def __mul__(self, other):
+        if self.transposed:
+            return self._rmul(other)
+        else:
+            return self._mul(other)
 
 
 # Helper functions.
@@ -473,6 +501,26 @@ def write_rb(fname, nrow, ncol, ip, ind,
     return
 
 
+def write_rb_from_rb(fname, matrix):
+    """
+    Convenience function to write a matrix in RB format to file.
+    """
+    (ip, ind, val) = matrix.data()
+    write_rb(fname, matrix.nrow, matrix.ncol, ip, ind, val,
+             symmetric=matrix.issym)
+    return
+
+
+def write_rb_from_coord(fname, nrow, ncol, irow, jcol, val=None, **kwargs):
+    """
+    Convenience function to write a matrix in coordinate format to file
+    in RB format.
+    """
+    (ind, ip, values) = coord2csc(ncol, irow, jcol, val)
+    write_rb(fname, nrow, ncol, ip, ind, val, **kwargs)
+    return
+
+
 def write_aux(fname, nrow, nvec, precision=17, title='Generic', key='Generic',
         caseid='Generic', dattyp='rhs', positn='r', orgniz='d', nauxd=None,
         ip=None, ind=None, val=None):
@@ -560,6 +608,9 @@ def write_aux(fname, nrow, nvec, precision=17, title='Generic', key='Generic',
 
 
 def write_aux_from_rb(fname, rbdata):
+    """
+    Convenience function to write supplementary data in RB format to file.
+    """
     (ip, ind, val) = rbdata.data()
     write_aux(fname, rbdata.nrow, ip.shape[0], dattyp=rbdata.dattyp,
               title=rbdata.title, key=rbdata.key, caseid=rbdata.caseid,
@@ -567,11 +618,14 @@ def write_aux_from_rb(fname, rbdata):
               ip=ip, ind=ind, val=val)
 
 def write_aux_from_numpy(fname, array, **kwargs):
+    """
+    Convenience function write a numpy array to file in RB format.
+    """
     if len(array.shape) == 1:
         nvec = 1
     else:
         nvec = array.shape[1]
-    write_aux(fname, array.shape[0], nvec, val=array)
+    write_aux(fname, array.shape[0], nvec, val=array, **kwargs)
 
 
 if __name__ == '__main__':
@@ -620,8 +674,10 @@ if __name__ == '__main__':
         pylab.show()
 
     # Write data back to file
-    (ip, ind, val) = M.data()
-    print val
+    #(ip, ind, val) = M.data()
+    #print val
     #write_rb('newmat.rb', M.nrow, M.ncol, ip, ind, val, symmetric=M.issym)
-    #x = numpy.ones(10)
-    #write_aux_from_numpy('x.rb', x)
+    x = numpy.ones(M.ncol)
+    #y = M*x
+    #write_aux_from_numpy('rhs.rb', y)
+    write_aux_from_numpy('sol.rb', x)
