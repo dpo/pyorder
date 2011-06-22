@@ -3,6 +3,7 @@ Various tools to complement PyOrder.
 """
 
 from hrb import *
+from mtx import *
 
 try:
     from spy import *
