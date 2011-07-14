@@ -46,6 +46,11 @@ the references below.
 import numpy
 from conversion import csc2coord, coord2csc
 from fortranformat import FortranRecordReader, FortranRecordWriter
+from fortranformat import config as ff_config
+
+# Possibility to set ff_config.RET_WRITTEN_VARS_ONLY = True
+# See:
+# https://bitbucket.org/brendanarnold/py-fortranformat/issue/1/reading-less-records-than-specified-by#comment-531697
 
 class HarwellBoeingMatrix:
     """
