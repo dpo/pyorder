@@ -17,9 +17,6 @@ import sys, os
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.append(os.path.abspath('.'))
-sys.path.append('../../pyorder/pymc21')
-sys.path.append('../../pyorder/pymc60')
-sys.path.append('../../pyorder/tools')
 sys.path.append('sphinxext')
 
 # -- General configuration -----------------------------------------------------
@@ -27,18 +24,18 @@ sys.path.append('sphinxext')
 # Import support for ipython console session syntax highlighting (lives
 # in the sphinxext directory defined above)
 import ipython_console_highlighting
+import mathjax
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.ifconfig']
 extensions += ['ipython_console_highlighting']
 extensions += ['matplotlib.sphinxext.only_directives', 'matplotlib.sphinxext.plot_directive']
-#extensions += ['sphinx.ext.pngmath']
-extensions += ['sphinx.ext.jsmath']
-jsmath_path = '/Users/dpo/local/src/jsMath/easy/load.js'
+extensions += ['mathjax']
+mathjax_path = 'https://d3eoax9i5htok0.cloudfront.net/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ['.templates']
 
 # The suffix of source filenames.
 source_suffix = '.rst'
@@ -51,7 +48,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'PyOrder'
-copyright = u'2009, Dominique Orban'
+copyright = u'2011, Dominique Orban'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -109,7 +106,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  Major themes that come with
 # Sphinx are currently 'default' and 'sphinxdoc'.
-html_theme = 'default'
+html_theme = 'agogo'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -138,7 +135,7 @@ html_theme = 'default'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ['.static']
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
