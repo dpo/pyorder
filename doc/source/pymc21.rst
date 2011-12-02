@@ -10,6 +10,9 @@ The :mod:`pymc21` Module
 
 .. automodule:: pyorder.pymc21.pymc21
 
+Functions available
+-------------------
+
 .. autofunction:: nonzerodiag
 
 
