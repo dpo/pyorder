@@ -5,14 +5,14 @@ The functions in this module compute a symmetric permutation of a sparse
 symmetric matrix so as to reduce its profile, wavefront, or bandwidth via
 Sloan's method [SLO]_ or the reverse Cuthill-McKee method [CM]_.
 
-**References**
+References
 
 .. [CM] E. Cuthill and J. McKee, *Reducing the bandwidth of sparse symmetric
         matrices* In Proc. 24th Nat. Conf. ACM, pages 157-172, 1969.
 
 .. [RS] J. K. Reid and J. A. Scott, *Ordering symmetric sparse matrices for
         small profile and wavefront*, International Journal for Numerical
-        Methods in Engineering, **45**(12), pp. 1737--1755, 1999.
+        Methods in Engineering, **45** (12), pp. 1737--1755, 1999.
 
 .. [SLO] S. W. Sloan, *An algorithm for profile and wavefront reduction of
          sparse matrices*, International Journal of Numerical Methods in
