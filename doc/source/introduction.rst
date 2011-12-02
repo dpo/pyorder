@@ -33,12 +33,16 @@ The :math:`i`-th *wavefront* of :math:`A` is the number of nonzero rows in the
 submatrix :math:`A(i:n,1:i)`, :math:`i = 1, \ldots, n`. It is
 denoted :math:`f_i`.
 
-The maximum and mean-square wavefronts are
+The maximum wavefront is
 
 .. math::
 
    \max_{i=1,\ldots,n} f_i
-   \quad \text{and} \quad
+
+while the mean-square wavefront is
+
+.. math::
+
    \frac{1}{n} \sum_{i=1}^{n} f_i^2.
 
 If :math:`m_i` is the column index of the first nonzero element on
