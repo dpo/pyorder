@@ -10,6 +10,9 @@ The :mod:`pymc60` Module
 
 .. automodule:: pyorder.pymc60.pymc60
 
+Functions available
+-------------------
+
 .. autofunction:: sloan
 
 .. autofunction:: rcmk
