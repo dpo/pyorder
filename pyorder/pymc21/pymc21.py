@@ -28,13 +28,13 @@ def nonzerodiag(nrow, colind, rowptr):
 
     :parameters:
 
-        :nrow: The number of rows of the input matrix.
+        :nrow:   The number of rows of the input matrix.
 
         :colind: An integer array (or list) of length nnz giving the column
                  indices of the nonzero elements in each row.
 
-        :rowptr: An integer array (or list) of length nrow+1 giving the indices
-                 of the first element of each row in colind.
+        :rowptr: An integer array (or list) of length nrow+1 giving the
+                 indices of the first element of each row in colind.
 
     :returns:
 
