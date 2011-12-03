@@ -1,5 +1,6 @@
 """
-Read a sparse matrix in Matrix Market format
+Read a sparse matrix in Matrix Market format.
+See http://math.nist.gov/MatrixMarket for a description of this format.
 
 .. moduleauthor: D. Orban <dominique.orban@gerad.ca>
 """
@@ -28,14 +29,14 @@ class MatrixMarketMatrix:
         self.symmetric = self.Hermitian = self.skewsym = False
 
         fp = open(fname)
-        pos = self.readHeader(fp)
-        nrecs = self.readData(fp,pos)
+        pos = self._readHeader(fp)
+        nrecs = self._readData(fp,pos)
         fp.close()
 
         if nrecs != self.nnz:
             raise ValueError, 'Read %d records. Expected %d.' % (nrecs,self.nnz)
 
-    def readHeader(self, fp):
+    def _readHeader(self, fp):
         fp.seek(0)
         hdr = fp.readline().split()
         if hdr[1] != 'matrix' or hdr[2] != 'coordinate':
@@ -66,7 +67,7 @@ class MatrixMarketMatrix:
         # Return current position
         return fp.tell() - len(line)
 
-    def readData(self, fp, pos):
+    def _readData(self, fp, pos):
         fp.seek(pos)
         size = fp.readline().split()
         self.nrow = atoi(size[0])
