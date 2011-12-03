@@ -8,14 +8,16 @@ __docformat__ = 'restructuredtext'
 
 def spy(A, patternonly=True, **kwargs):
     """
-    To plot the sparsity pattern of a sparse matrix in linked-list format.
+    To plot the sparsity pattern of a sparse matrix object. The sparse matrix
+    object must implement `find()`, which must return the contents of the
+    matrix in coordinate format, i.e., (val,irow,jcol).
 
     :parameters:
 
-        :A:  Input matrix in linked-list format.
+        :A:  Input matrix
 
-        :patternonly:  If True, only output a black and white sparsity pattern.
-                       If set to False, colorize the plot according to the
+        :patternonly:  If `True`, only output a black and white sparsity
+                       pattern. If `False`, colorize the plot according to the
                        magnitude of the nonzero elements.
 
     :keywords:
@@ -45,7 +47,7 @@ def FastSpy(nrow, ncol, irow, jcol, **kwargs):
     """
     To plot the sparsity pattern of a sparse matrix in coordinate format.
 
-    :arguments:
+    :parameters:
 
         :nrow: Number of rows of the matrix.
         :ncol: Number of columns of the matrix.
@@ -75,7 +77,7 @@ def FastSpy(nrow, ncol, irow, jcol, **kwargs):
               elements of the matrix. If supplied, a scatter plot is produced
               with patches of size proportional to the magnitude of the
               element. This option can slow down the plot for large values of
-              nnz.
+              the number of nonzero elements.
     """
     ax = kwargs.get('ax', None)
     if ax is None:
