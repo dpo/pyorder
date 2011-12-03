@@ -67,7 +67,7 @@ print 'The root-mean-square wavefront is ', rinfo[3]
 
 try:
     import pylab
-    from sparsetools import FastSpy
+    from pyorder.tools.spy import FastSpy
     # Plot original matrix
     (irow, jcol) = M.find()
     left = pylab.subplot(121)
