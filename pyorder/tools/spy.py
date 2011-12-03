@@ -10,7 +10,7 @@ def spy(A, patternonly=True, **kwargs):
     """
     To plot the sparsity pattern of a sparse matrix in linked-list format.
 
-    :arguments:
+    :parameters:
 
         :A:  Input matrix in linked-list format.
 
