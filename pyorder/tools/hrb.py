@@ -67,7 +67,7 @@ class HarwellBoeingMatrix:
     from 0 through nrow-1 and column indices range from 0 through ncol-1.
 
     The matrix can be subsequently converted to triple format with
-        (row, col) = self.find()
+        (val, row, col) = self.find()
 
     :keywords:
 
@@ -94,24 +94,25 @@ class HarwellBoeingMatrix:
         Return matrix data in compressed sparse row format.
 
         :returns:
+            :val:   array of values of nonzero elements
             :ip:    array of pointer to rows
             :ind:   array of indices of nonzero elements in each row
-            :val:   array of values of nonzero elements
         """
         #if self.ip is None or self.ind is None: return (None,None,None)
-        return (self.ip, self.ind, self.val)
+        return (self.val, self.ip, self.ind)
 
     def find(self):
         """
-        Return matrix data in coordinate format. The array of values is as
-        returned by :meth:`data`.
+        Return matrix data in coordinate format.
 
         :returns:
+            :val:   array of values of nonzero elements
             :irow:   array of indices of nonzero elements in each row
             :jcol:   array of indices of nonzero elements in each column
         """
-        if self.ip is None or self.ind is None: return (None,None)
-        return csc2coord(self.ind, self.ip)
+        if self.ip is None or self.ind is None: return (None,None,None)
+        irow, jcol = csc2coord(self.ind, self.ip)
+        return (self.val, irow, jcol)
 
     def _readArray(self, fp, which, nelm, format):
         #print 'Reading %d values with format %s' % (nelm, format)
@@ -231,7 +232,7 @@ class RutherfordBoeingData(HarwellBoeingMatrix):
     0 through nrow-1 and column indices range from 0 through ncol-1.
 
     The data can be subsequently converted to triple format with
-        (row, col) = self.find()
+        (val, row, col) = self.find()
 
     :keywords:
 
@@ -667,7 +668,7 @@ if __name__ == '__main__':
             sys.stderr.write('Pylab is required for the demo\n')
             sys.exit(1)
 
-        (row,col) = M.find()
+        (val, row,col) = M.find()
         fig = pylab.figure()
         ax = fig.gca()
         ax.plot(col, row, 'ks', markersize=1, linestyle='None')
