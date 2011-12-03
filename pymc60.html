@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Profile, Wavefront, Bandwidth Reduction &mdash; PyOrder 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://d3eoax9i5htok0.cloudfront.net/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="PyOrder 0.1.0 documentation" href="index.html" />
+    <link rel="next" title="Input / Output" href="io.html" />
+    <link rel="prev" title="Bringing Nonzero Elements to the Diagonal" href="pymc21.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">PyOrder 0.1.0 documentation</a></div>
+        <div class="rel">
+          <a href="pymc21.html" title="Bringing Nonzero Elements to the Diagonal"
+             accesskey="P">previous</a> |
+          <a href="io.html" title="Input / Output"
+             accesskey="N">next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="profile-wavefront-bandwidth-reduction">
+<span id="pymc60-page"></span><h1>Profile, Wavefront, Bandwidth Reduction<a class="headerlink" href="#profile-wavefront-bandwidth-reduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pyorder.pymc60.pymc60">
+<span id="the-pymc60-module"></span><h2>The <tt class="xref py py-mod docutils literal"><span class="pre">pymc60</span></tt> Module<a class="headerlink" href="#module-pyorder.pymc60.pymc60" title="Permalink to this headline">¶</a></h2>
+<p>A Python interface to the HSL subroutine MC60AD.</p>
+<p>The functions in this module compute a symmetric permutation of a sparse
+symmetric matrix so as to reduce its profile, wavefront, or bandwidth via
+Sloan&#8217;s method <a class="reference internal" href="#slo">[SLO]</a> or the reverse Cuthill-McKee method <a class="reference internal" href="#cm">[CM]</a>.</p>
+<p>References</p>
+<table class="docutils citation" frame="void" id="cm" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[CM]</a></td><td>E. Cuthill and J. McKee, <em>Reducing the bandwidth of sparse symmetric
+matrices</em> In Proc. 24th Nat. Conf. ACM, pages 157-172, 1969.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="rs" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[RS]</td><td>J. K. Reid and J. A. Scott, <em>Ordering symmetric sparse matrices for
+small profile and wavefront</em>, International Journal for Numerical
+Methods in Engineering, <strong>45</strong>(12), pp. 1737&#8211;1755, 1999.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="slo" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[SLO]</a></td><td>S. W. Sloan, <em>An algorithm for profile and wavefront reduction of
+sparse matrices</em>, International Journal of Numerical Methods in
+Engineering, <strong>23</strong>, pp. 239&#8211;251, 1986.</td></tr>
+</tbody>
+</table>
+<div class="section" id="functions-available">
+<h3>Functions available<a class="headerlink" href="#functions-available" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="pyorder.pymc60.pymc60.sloan">
+<tt class="descclassname">pyorder.pymc60.pymc60.</tt><tt class="descname">sloan</tt><big>(</big><em>n, rowind, colptr, icntl=[0, 6], weight=[2, 1]</em><big>)</big><a class="headerlink" href="#pyorder.pymc60.pymc60.sloan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply Sloan&#8217;s algorithm to reduce the profile and wavefront of a sparse
+symmetric matrix. Either the lower or the upper triangle of the input
+matrix should be given in compressed sparse column (csc) or compressed
+sparse row (csr) format. This includes the diagonal of the matrix. A set of
+weights can be supplied to define the priority function in Sloan&#8217;s method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">n:</th><td class="field-body">The order of the input matrix.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">rowind:</th><td class="field-body">An integer array (or list) of length nnz giving the row
+indices of the nonzero elements in each column.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">colptr:</th><td class="field-body">An integer array (or list) of length n+1 giving the indices of
+the first element of each column in rowind.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Note that since either triangle can be given in either csc or csr format,
+the words &#8216;row&#8217; and &#8216;column&#8217; may be swapped in the description above.
+The indexing in rowind and colptr should be zero-based.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keywords:</th><td class="field-body"><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">icntl:</th><td class="field-body">An integer array (or list) of length two of control parameters
+used during the first phase, where the input data is checked.
+The method terminates if duplicates of out-of-range indices are
+discovered (icntl[0]=0) or ignores them (icntl[0]=1). No
+diagnostic messages will be output if icntl[1]=0. If icntl[1]
+is &gt; 0, it gives the unit number (in the Fortran sense) where
+diagonostic messages are output.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">weight:</th><td class="field-body">An integer array (or list) of length two giving the weights
+in Sloan&#8217;s priority function. Reid and Scott (1999) recommend
+to apply the method twice, with either [2,1] and [16,1], or
+with [1,2] and [16,1], and to retain the best result.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">perm:</th><td class="field-body">An integer array of length n giving the variable permutation. If
+irow and jcol are two integer arrays describing the pattern of
+the input matrix in triple format, perm[irow] and perm[jrow]
+describe the permuted matrix.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">rinfo:</th><td class="field-body">A real array of length 4 giving statistics on the permuted
+matrix.
+rinfo[0] = profile
+rinfo[1] = maximum wavefront
+rinfo[2] = semi-bandwidth
+rinfo[3] = root-mean-square wavefront.</td>
+</tr>
+</tbody>
+</table>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyorder.pymc60.pymc60.rcmk">
+<tt class="descclassname">pyorder.pymc60.pymc60.</tt><tt class="descname">rcmk</tt><big>(</big><em>n, rowind, colptr, icntl=[0, 6]</em><big>)</big><a class="headerlink" href="#pyorder.pymc60.pymc60.rcmk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the reverse Cuthill-McKee algorithm to reduce the bandwidth of
+a sparse symmetric matrix. Either the lower or the upper triangle of the
+input matrix should be given in compressed sparse column (csc) or
+compressed sparse row (csr) format. This includes the diagonal of the
+matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">n:</th><td class="field-body">The order of the input matrix.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">rowind:</th><td class="field-body">An integer array (or list) of length nnz giving the row
+indices of the nonzero elements in each column.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">colptr:</th><td class="field-body">An integer array (or list) of length n+1 giving the indices of
+the first element of each column in rowind.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Note that since either triangle can be given in either csc or csr format,
+the words &#8216;row&#8217; and &#8216;column&#8217; may be swapped in the description above.
+The indexing in rowind and colptr should be zero-based.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keywords:</th><td class="field-body"><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">icntl:</th><td class="field-body">An integer array (or list) of length two of control parameters
+used during the first phase, where the input data is checked.
+The method terminates if duplicates of out-of-range indices are
+discovered (icntl[0]=0) or ignores them (icntl[0]=1). No
+diagnostic messages will be output if icntl[1]=0. If icntl[1]
+is &gt; 0, it gives the unit number (in the Fortran sense) where
+diagonostic messages are output.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">perm:</th><td class="field-body">An integer array of length n giving the variable permutation. If
+irow and jcol are two integer arrays describing the pattern of
+the input matrix in triple format, perm[irow] and perm[jcol]
+describe the permuted matrix.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">rinfo:</th><td class="field-body">A real array of length 4 giving statistics on the permuted
+matrix.
+rinfo[0] = profile
+rinfo[1] = maximum wavefront
+rinfo[2] = semi-bandwidth
+rinfo[3] = root-mean-square wavefront.</td>
+</tr>
+</tbody>
+</table>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyorder.pymc60.pymc60.reorder_matrix">
+<tt class="descclassname">pyorder.pymc60.pymc60.</tt><tt class="descname">reorder_matrix</tt><big>(</big><em>n, rowind, colptr, icntl=[0, 6], jcntl=[0, 0], weight=[2, 1]</em><big>)</big><a class="headerlink" href="#pyorder.pymc60.pymc60.reorder_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function called by <cite>sloan</cite> and <cite>rcm</cite> performing the bulk of the
+work when applying Sloan&#8217;s method or the reverse Cuthill-McKee algorithm to
+a symmetric sparse matrix.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="basic-usage">
+<h3>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h3>
+<p>The first example is the one from the documentation of the HSL subroutine MC60.
+In it, we call the Fortran subroutines directly. As before, this means that all
+indices must be 1-based. The permutation vector and indices of the
+supervariables are also 1-based.</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre></div></td><td class="code"><div class="highlight"><pre><span class="s">&quot;MC60 demo from the HSL MC60 spec sheet&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pyorder.pymc60</span> <span class="kn">import</span> <span class="n">mc60module</span>
+
+<span class="n">icntl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span> <span class="c"># Abort on error</span>
+<span class="n">jcntl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span> <span class="c"># Sloan&#39;s alg with auto choice</span>
+<span class="n">weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>                <span class="c"># Weights in Sloan&#39;s alg</span>
+
+<span class="c"># Store lower triangle of symmetric matrix in csr format (1-based)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">icptr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>  <span class="c"># nnz = 10</span>
+<span class="n">irn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">icptr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">irn</span><span class="p">[:</span><span class="n">icptr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+<span class="c"># Check data</span>
+<span class="n">info</span> <span class="o">=</span> <span class="n">mc60module</span><span class="o">.</span><span class="n">mc60ad</span><span class="p">(</span><span class="n">irn</span><span class="p">,</span> <span class="n">icptr</span><span class="p">,</span> <span class="n">icntl</span><span class="p">)</span>
+
+<span class="c"># Compute supervariables</span>
+<span class="n">nsup</span><span class="p">,</span> <span class="n">svar</span><span class="p">,</span> <span class="nb">vars</span> <span class="o">=</span> <span class="n">mc60module</span><span class="o">.</span><span class="n">mc60bd</span><span class="p">(</span><span class="n">irn</span><span class="p">,</span> <span class="n">icptr</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;The number of supervariables is &#39;</span><span class="p">,</span> <span class="n">nsup</span>
+
+<span class="c"># Permute reduced matrix</span>
+<span class="n">permsv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">nsup</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">pair</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="n">nsup</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">info</span> <span class="o">=</span> <span class="n">mc60module</span><span class="o">.</span><span class="n">mc60cd</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">irn</span><span class="p">,</span><span class="n">icptr</span><span class="p">[:</span><span class="n">nsup</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span><span class="nb">vars</span><span class="p">[:</span><span class="n">nsup</span><span class="p">],</span><span class="n">jcntl</span><span class="p">,</span><span class="n">permsv</span><span class="p">,</span><span class="n">weight</span><span class="p">,</span><span class="n">pair</span><span class="p">)</span>
+
+<span class="c"># Compute profile and wavefront</span>
+<span class="n">rinfo</span> <span class="o">=</span> <span class="n">mc60module</span><span class="o">.</span><span class="n">mc60fd</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">irn</span><span class="p">,</span> <span class="n">icptr</span><span class="p">[:</span><span class="n">nsup</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="nb">vars</span><span class="p">[:</span><span class="n">nsup</span><span class="p">],</span> <span class="n">permsv</span><span class="p">)</span>
+
+<span class="c"># Obtain variable permutation from supervariable permutation</span>
+<span class="n">perm</span><span class="p">,</span> <span class="n">possv</span> <span class="o">=</span> <span class="n">mc60module</span><span class="o">.</span><span class="n">mc60dd</span><span class="p">(</span><span class="n">svar</span><span class="p">,</span> <span class="nb">vars</span><span class="p">[:</span><span class="n">nsup</span><span class="p">],</span> <span class="n">permsv</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;The variable permutation is &#39;</span><span class="p">,</span> <span class="n">perm</span>    <span class="c"># 1-based</span>
+<span class="k">print</span> <span class="s">&#39;The profile is &#39;</span><span class="p">,</span> <span class="n">rinfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;The maximum wavefront is &#39;</span><span class="p">,</span> <span class="n">rinfo</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;The semibandwidth is &#39;</span><span class="p">,</span> <span class="n">rinfo</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;The root-mean-square wavefront is &#39;</span><span class="p">,</span> <span class="n">rinfo</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="python-interface">
+<h3>Python Interface<a class="headerlink" href="#python-interface" title="Permalink to this headline">¶</a></h3>
+<p>The Python interface provides smoother and more intuitive application of
+Sloan&#8217;s and the reverse Cuthill-McKee methods by way of the <a class="reference internal" href="#pyorder.pymc60.pymc60.sloan" title="pyorder.pymc60.pymc60.sloan"><tt class="xref py py-func docutils literal"><span class="pre">sloan()</span></tt></a> and
+<a class="reference internal" href="#pyorder.pymc60.pymc60.rcmk" title="pyorder.pymc60.pymc60.rcmk"><tt class="xref py py-func docutils literal"><span class="pre">rcmk()</span></tt></a> functions. At the same time, we use input data in either
+Harwell-Boeing or Rutherford-Boeing format.</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre></div></td><td class="code"><div class="highlight"><pre><span class="s">&quot;MC60 demo with input matrix in HB or RB format&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pyorder.pymc60</span> <span class="kn">import</span> <span class="n">sloan</span><span class="p">,</span> <span class="n">rcmk</span>
+<span class="kn">from</span> <span class="nn">pyorder.tools.hrb</span> <span class="kn">import</span> <span class="n">HarwellBoeingMatrix</span><span class="p">,</span> <span class="n">RutherfordBoeingData</span>
+<span class="kn">from</span> <span class="nn">pyorder.tools.spy</span> <span class="kn">import</span> <span class="n">FastSpy</span>
+<span class="kn">import</span> <span class="nn">pylab</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Data file name must be supplied</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="c">#M = HarwellBoeingMatrix(fname, patternOnly=True, readRhs=False)</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">RutherfordBoeingData</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">patternOnly</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">readRhs</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">M</span><span class="o">.</span><span class="n">nrow</span> <span class="o">!=</span> <span class="n">M</span><span class="o">.</span><span class="n">ncol</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">M</span><span class="o">.</span><span class="n">issym</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Input matrix must be square and symmetric</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c"># Compute reverse Cuthill-McKee ordering</span>
+<span class="n">perm</span><span class="p">,</span> <span class="n">rinfo</span> <span class="o">=</span> <span class="n">rcmk</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">nrow</span><span class="p">,</span> <span class="n">M</span><span class="o">.</span><span class="n">ind</span><span class="p">,</span> <span class="n">M</span><span class="o">.</span><span class="n">ip</span><span class="p">)</span>
+
+<span class="c"># Or: Compute Sloan&#39;s ordering</span>
+<span class="c">#perm, rinfo = sloan(M.nrow, M.ind, M.ip)</span>
+
+<span class="c"># Plot original matrix</span>
+<span class="p">(</span><span class="n">irow</span><span class="p">,</span> <span class="n">jcol</span><span class="p">)</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
+<span class="n">left</span> <span class="o">=</span> <span class="n">pylab</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">FastSpy</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">nrow</span><span class="p">,</span> <span class="n">M</span><span class="o">.</span><span class="n">ncol</span><span class="p">,</span> <span class="n">irow</span><span class="p">,</span> <span class="n">jcol</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="n">M</span><span class="o">.</span><span class="n">issym</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">left</span><span class="o">.</span><span class="n">get_axes</span><span class="p">(),</span> <span class="n">title</span><span class="o">=</span><span class="s">&#39;Original&#39;</span><span class="p">)</span>
+
+<span class="c"># Apply permutation and plot reordered matrix</span>
+<span class="n">right</span> <span class="o">=</span> <span class="n">pylab</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">FastSpy</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">nrow</span><span class="p">,</span> <span class="n">M</span><span class="o">.</span><span class="n">ncol</span><span class="p">,</span> <span class="n">perm</span><span class="p">[</span><span class="n">irow</span><span class="p">],</span> <span class="n">perm</span><span class="p">[</span><span class="n">jcol</span><span class="p">],</span> <span class="n">sym</span><span class="o">=</span><span class="n">M</span><span class="o">.</span><span class="n">issym</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">right</span><span class="o">.</span><span class="n">get_axes</span><span class="p">(),</span> <span class="n">title</span><span class="o">=</span><span class="s">&#39;Reordered&#39;</span><span class="p">)</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+<p>For illustration, here is the result of this example on a problem from the
+<a class="reference external" href="http://www.cise.ufl.edu/research/sparse/matrices">University of Florida Sparse Matrix Collection</a>. I used matrix
+<a class="reference external" href="http://www.cise.ufl.edu/research/sparse/matrices/Pothen/commanche_dual.html">commanche_dual</a>
+in Rutherford-Boeing format.</p>
+<p>Here is the matrix reordered according to Sloan&#8217;s algorithm.</p>
+<img alt="_images/commanche_dual_sloan.png" src="_images/commanche_dual_sloan.png" />
+<p>Here it is reordered according to the reverse Cuthill-McKee algorithm.</p>
+<img alt="_images/commanche_dual_rcmk.png" src="_images/commanche_dual_rcmk.png" />
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pymc21.html">Nonzero Diagonal</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Profile, Wavefront, Bandwidth Reduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyorder.pymc60.pymc60">The <tt class="docutils literal"><span class="pre">pymc60</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">Input / Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Other Tools</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">Search</h3>
+          <form class="search" action="search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="Go" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            Enter search terms or a module, class or function name.
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="pymc21.html" title="Bringing Nonzero Elements to the Diagonal"
+             >previous</a> |
+          <a href="io.html" title="Input / Output"
+             >next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+            <br/>
+            <a href="_sources/pymc60.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2011, Dominique Orban.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

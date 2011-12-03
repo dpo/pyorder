@@ -1,0 +1,411 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Input / Output &mdash; PyOrder 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://d3eoax9i5htok0.cloudfront.net/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="PyOrder 0.1.0 documentation" href="index.html" />
+    <link rel="next" title="Other Tools" href="tools.html" />
+    <link rel="prev" title="Profile, Wavefront, Bandwidth Reduction" href="pymc60.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">PyOrder 0.1.0 documentation</a></div>
+        <div class="rel">
+          <a href="pymc60.html" title="Profile, Wavefront, Bandwidth Reduction"
+             accesskey="P">previous</a> |
+          <a href="tools.html" title="Other Tools"
+             accesskey="N">next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="input-output">
+<span id="io-page"></span><h1>Input / Output<a class="headerlink" href="#input-output" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pyorder.tools.hrb">
+<span id="the-hrb-module"></span><h2>The <tt class="xref py py-mod docutils literal"><span class="pre">hrb</span></tt> Module<a class="headerlink" href="#module-pyorder.tools.hrb" title="Permalink to this headline">¶</a></h2>
+<p>Provides access to sparse linear systems described in Harwell-Boeing or
+Rutherford-Boeing format. This module exposes the two classes
+HarwellBoeingMatrix and RutherfordBoeingData. For more information, see
+the references below.</p>
+<p><strong>References</strong></p>
+<table class="docutils citation" frame="void" id="dgl" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[DGL]</td><td>I.S. Duff, R.G. Grimes and J.G. Lewis,
+Sparse Matrix Test Problems, ACM Transactions on
+Mathematical Software, 15(1), p.1-14, 1989</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="hbug" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[HBUG]</td><td><a class="reference external" href="ftp://ftp.cerfacs.fr/pub/algo/matrices/harwell_boeing/userguide.ps.Z">ftp://ftp.cerfacs.fr/pub/algo/matrices/harwell_boeing/userguide.ps.Z</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="hb" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[HB]</td><td><a class="reference external" href="http://math.nist.gov/MatrixMarket/data/Harwell-Boeing">http://math.nist.gov/MatrixMarket/data/Harwell-Boeing</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="rbc" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[RBC]</a></td><td>The Rutherford-Boeing Sparse Matrix Collection,
+I.S. Duff, R.G. Grimes and J.G. Lewis, Technical Report RAL-TR-97-031,
+Rutherford Appleton Laboratory, Chilton, OX, UK, 1997.
+(<a class="reference external" href="ftp://ftp.numerical.rl.ac.uk/pub/reports/duglRAL97031.pdf">ftp://ftp.numerical.rl.ac.uk/pub/reports/duglRAL97031.pdf</a>)</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="rb" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[RB]</td><td><a class="reference external" href="http://www.cerfacs.fr/algor/Softs/RB">http://www.cerfacs.fr/algor/Softs/RB</a></td></tr>
+</tbody>
+</table>
+<div class="section" id="classes-available">
+<h3>Classes Available<a class="headerlink" href="#classes-available" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pyorder.tools.hrb.HarwellBoeingMatrix">
+<em class="property">class </em><tt class="descclassname">pyorder.tools.hrb.</tt><tt class="descname">HarwellBoeingMatrix</tt><big>(</big><em>fname</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyorder.tools.hrb.HarwellBoeingMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Imports a sparse matrix from a file in Harwell-Boeing format. The matrix is
+stored in compressed sparse row format in (self.ind, self.ip, self.val).
+Right-hand sides, if any, are stored in self.rhs. Right-hand sides can be
+stored as dense vectors, in which case self.rhs has shape (nrow, nrhs), as
+sparse vectors, in which case they are stored in compressed sparse column
+format in (self.rhsptr, self.rhsind, self.rhs), or in elemental format
+(typically when the matrix itself is stored in finite-element format), in
+which case self.rhs has shape (nnzero, nrhs).</p>
+<p>Note that the matrix indices are zero-based, i.e., row indices range
+from 0 through nrow-1 and column indices range from 0 through ncol-1.</p>
+<dl class="docutils">
+<dt>The matrix can be subsequently converted to triple format with</dt>
+<dd>(val, row, col) = self.find()</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keywords:</th><td class="field-body"><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">patternOnly:</th><td class="field-body">do not read matrix element values (False)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">readRhs:</th><td class="field-body">read right-hand sides, if any (False)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">readGuess:</th><td class="field-body">read starting guess, if any (False)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">realSol:</th><td class="field-body">read solution vector, if any (False)</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyorder.tools.hrb.HarwellBoeingMatrix.data">
+<tt class="descname">data</tt><big>(</big><big>)</big><a class="headerlink" href="#pyorder.tools.hrb.HarwellBoeingMatrix.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return matrix data in compressed sparse row format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">val:</th><td class="field-body">array of values of nonzero elements</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ip:</th><td class="field-body">array of pointer to rows</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">ind:</th><td class="field-body">array of indices of nonzero elements in each row</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyorder.tools.hrb.HarwellBoeingMatrix.find">
+<tt class="descname">find</tt><big>(</big><big>)</big><a class="headerlink" href="#pyorder.tools.hrb.HarwellBoeingMatrix.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return matrix data in coordinate format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">val:</th><td class="field-body">array of values of nonzero elements</td>
+</tr>
+<tr class="field-even field"><th class="field-name">irow:</th><td class="field-body">array of indices of nonzero elements in each row</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">jcol:</th><td class="field-body">array of indices of nonzero elements in each column</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyorder.tools.hrb.RutherfordBoeingData">
+<em class="property">class </em><tt class="descclassname">pyorder.tools.hrb.</tt><tt class="descname">RutherfordBoeingData</tt><big>(</big><em>fname</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyorder.tools.hrb.RutherfordBoeingData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyorder.tools.hrb.HarwellBoeingMatrix" title="pyorder.tools.hrb.HarwellBoeingMatrix"><tt class="xref py py-class docutils literal"><span class="pre">pyorder.tools.hrb.HarwellBoeingMatrix</span></tt></a></p>
+<p>Imports data from a file in Rutherford-Boeing format. The data is held in
+(self.ind, self.ip, self.val). If the data represents a sparse matrix, the
+three arrays represent the matrix stored in compressed sparse row format.
+Otherwise, the three arrays represent the supplementary data. Refer to the
+Rutherford-Boeing documentation for more information (reference [4] in the
+docstring for the present module.)</p>
+<p>Note that the matrix indices are zero-based, i.e., row indices range from
+0 through nrow-1 and column indices range from 0 through ncol-1.</p>
+<dl class="docutils">
+<dt>The data can be subsequently converted to triple format with</dt>
+<dd>(val, row, col) = self.find()</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Keywords:</th><td class="field-body"><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">patternOnly:</th><td class="field-body">do not read data values (False)</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyorder.tools.hrb.RutherfordBoeingData.data">
+<tt class="descname">data</tt><big>(</big><big>)</big><a class="headerlink" href="#pyorder.tools.hrb.RutherfordBoeingData.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return matrix data in compressed sparse row format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">val:</th><td class="field-body">array of values of nonzero elements</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ip:</th><td class="field-body">array of pointer to rows</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">ind:</th><td class="field-body">array of indices of nonzero elements in each row</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyorder.tools.hrb.RutherfordBoeingData.find">
+<tt class="descname">find</tt><big>(</big><big>)</big><a class="headerlink" href="#pyorder.tools.hrb.RutherfordBoeingData.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return matrix data in coordinate format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">val:</th><td class="field-body">array of values of nonzero elements</td>
+</tr>
+<tr class="field-even field"><th class="field-name">irow:</th><td class="field-body">array of indices of nonzero elements in each row</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">jcol:</th><td class="field-body">array of indices of nonzero elements in each column</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="convenience-functions">
+<h3>Convenience Functions<a class="headerlink" href="#convenience-functions" title="Permalink to this headline">¶</a></h3>
+<p>See <a class="reference internal" href="#rbc">[RBC]</a> for more information on the meaning of some of the arguments
+below.</p>
+<dl class="function">
+<dt id="pyorder.tools.hrb.write_rb">
+<tt class="descclassname">pyorder.tools.hrb.</tt><tt class="descname">write_rb</tt><big>(</big><em>fname</em>, <em>nrow</em>, <em>ncol</em>, <em>ip</em>, <em>ind</em>, <em>val=None</em>, <em>precision=17</em>, <em>symmetric=False</em>, <em>skew=False</em>, <em>title='Generic'</em>, <em>key='Generic'</em><big>)</big><a class="headerlink" href="#pyorder.tools.hrb.write_rb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a sparse matrix to file in Rutherford-Boeing format. The input matrix
+must be described in compressed column format by the arrays <cite>ip</cite> and <cite>ind</cite>.
+Rows must be ordered in each column.
+If numerical values are to be written to file, they should be specified in
+the array <cite>val</cite>.</p>
+<p>Currently only supports assembled matrices in compressed column format.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyorder.tools.hrb.write_rb_from_rb">
+<tt class="descclassname">pyorder.tools.hrb.</tt><tt class="descname">write_rb_from_rb</tt><big>(</big><em>fname</em>, <em>matrix</em><big>)</big><a class="headerlink" href="#pyorder.tools.hrb.write_rb_from_rb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to write a matrix in RB format to file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyorder.tools.hrb.write_rb_from_coord">
+<tt class="descclassname">pyorder.tools.hrb.</tt><tt class="descname">write_rb_from_coord</tt><big>(</big><em>fname</em>, <em>nrow</em>, <em>ncol</em>, <em>irow</em>, <em>jcol</em>, <em>val=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyorder.tools.hrb.write_rb_from_coord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to write a matrix in coordinate format to file
+in RB format.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyorder.tools.hrb.write_aux">
+<tt class="descclassname">pyorder.tools.hrb.</tt><tt class="descname">write_aux</tt><big>(</big><em>fname</em>, <em>nrow</em>, <em>nvec</em>, <em>precision=17</em>, <em>title='Generic'</em>, <em>key='Generic'</em>, <em>caseid='Generic'</em>, <em>dattyp='rhs'</em>, <em>positn='r'</em>, <em>orgniz='d'</em>, <em>nauxd=None</em>, <em>ip=None</em>, <em>ind=None</em>, <em>val=None</em><big>)</big><a class="headerlink" href="#pyorder.tools.hrb.write_aux" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write supplementary data to file in Rutherford-Boeing format.</p>
+<p>Only real data is supported for now.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-pyorder.tools.mtx">
+<span id="the-mtx-module"></span><h2>The <tt class="xref py py-mod docutils literal"><span class="pre">mtx</span></tt> Module<a class="headerlink" href="#module-pyorder.tools.mtx" title="Permalink to this headline">¶</a></h2>
+<p>Read a sparse matrix in Matrix Market format.
+See <a class="reference external" href="http://math.nist.gov/MatrixMarket">http://math.nist.gov/MatrixMarket</a> for a description of this format.</p>
+<div class="section" id="id2">
+<h3>Classes Available<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pyorder.tools.mtx.MatrixMarketMatrix">
+<em class="property">class </em><tt class="descclassname">pyorder.tools.mtx.</tt><tt class="descname">MatrixMarketMatrix</tt><big>(</big><em>fname</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyorder.tools.mtx.MatrixMarketMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>A MatrixMarketMatrix object represents a sparse matrix read from a file.
+This file must describe a sparse matrix in the MatrixMarket file format.</p>
+<p>See <a class="reference external" href="http://math.nist.gov/MatrixMarket">http://math.nist.gov/MatrixMarket</a> for more information.</p>
+<p>Example: mat = MatrixMarketMatrix(&#8216;1138bus.mtx&#8217;)</p>
+<dl class="method">
+<dt id="pyorder.tools.mtx.MatrixMarketMatrix.find">
+<tt class="descname">find</tt><big>(</big><big>)</big><a class="headerlink" href="#pyorder.tools.mtx.MatrixMarketMatrix.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the sparse matrix in triple format (val,irow,jcol). If the
+matrix data type is <cite>None</cite>, i.e., only the matrix sparsity pattern
+is available, this method returns (irow,jcol).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pymc21.html">Nonzero Diagonal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pymc60.html">Profile, Wavefront, Bandwidth Reduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Input / Output</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyorder.tools.hrb">The <tt class="docutils literal"><span class="pre">hrb</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyorder.tools.mtx">The <tt class="docutils literal"><span class="pre">mtx</span></tt> Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Other Tools</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">Search</h3>
+          <form class="search" action="search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="Go" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            Enter search terms or a module, class or function name.
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="pymc60.html" title="Profile, Wavefront, Bandwidth Reduction"
+             >previous</a> |
+          <a href="tools.html" title="Other Tools"
+             >next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+            <br/>
+            <a href="_sources/io.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2011, Dominique Orban.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>
