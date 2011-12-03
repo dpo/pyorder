@@ -86,33 +86,34 @@ class HarwellBoeingMatrix:
         self.guess = self.sol = None
 
         fp = open(fname, 'r')
-        self.readMatrix(fp, **kwargs)
+        self._readMatrix(fp, **kwargs)
         fp.close()
 
     def data(self):
+        """
+        Return matrix data in compressed sparse row format.
+
+        :returns:
+            :ip:    array of pointer to rows
+            :ind:   array of indices of nonzero elements in each row
+            :val:   array of values of nonzero elements
+        """
         #if self.ip is None or self.ind is None: return (None,None,None)
         return (self.ip, self.ind, self.val)
 
     def find(self):
+        """
+        Return matrix data in coordinate format. The array of values is as
+        returned by :meth:`data`.
+
+        :returns:
+            :irow:   array of indices of nonzero elements in each row
+            :jcol:   array of indices of nonzero elements in each column
+        """
         if self.ip is None or self.ind is None: return (None,None)
         return csc2coord(self.ind, self.ip)
 
-    def _Old_readArray(self, fp, which, nelm, format):
-        fmt = F.FortranFormat(str(format))
-        ind = 0
-        while ind < nelm-1:
-            fdata = F.FortranLine(fp.readline(), fmt)
-            ind2 = min(ind + len(fdata.data), nelm)
-            which[ind:ind2] = fdata.data[0:ind2-ind]
-            ind = ind2
-        return
-
-    def _Old_fortranRead(self, stream, format):
-        fmt = F.FortranFormat(format)
-        fdata = F.FortranLine(stream, fmt)
-        return fdata.data
-
-    def readArray(self, fp, which, nelm, format):
+    def _readArray(self, fp, which, nelm, format):
         #print 'Reading %d values with format %s' % (nelm, format)
         fmt = FortranRecordReader(format)
         ind = 0
@@ -127,17 +128,17 @@ class HarwellBoeingMatrix:
             which[ind:] = fdata[:nelm-ind]
         return
 
-    def fortranRead(self, stream, format):
+    def _fortranRead(self, stream, format):
         fmt = FortranRecordReader(format)
         fdata = fmt.read(stream)
         return fdata
 
-    def readMatrix(self, fp, **kwargs):
+    def _readMatrix(self, fp, **kwargs):
         self.patternOnly = kwargs.get('patternOnly', False)
         self.readRhs = kwargs.get('readRhs', False)
         self.readGuess = kwargs.get('readGuess', False)
         self.readSol = kwargs.get('readSol', False)
-        fRead = self.fortranRead
+        fRead = self._fortranRead
 
         # Read matrix header
         fp.seek(0)
@@ -161,8 +162,8 @@ class HarwellBoeingMatrix:
         self.ind = numpy.empty(self.nnzero, dtype=numpy.int)
 
         # Read matrix pattern
-        self.readArray(fp, self.ip, self.ncol+1, ptrfmt)
-        self.readArray(fp, self.ind, self.nnzero, indfmt)
+        self._readArray(fp, self.ip, self.ncol+1, ptrfmt)
+        self._readArray(fp, self.ind, self.nnzero, indfmt)
 
         # Adjust indices to be 0-based
         self.ip -= 1
@@ -177,7 +178,7 @@ class HarwellBoeingMatrix:
             vallen = neltvl
 
         self.val = numpy.empty(vallen, dtype=dataType)
-        self.readArray(fp, self.val, vallen, valfmt)
+        self._readArray(fp, self.val, vallen, valfmt)
 
         # Read right-hand sides, if any
         if not self.readRhs or self.nrhs == 0: return
@@ -185,34 +186,34 @@ class HarwellBoeingMatrix:
             # Read dense right-hand sides
             self.rhs = numpy.empty((self.nrow, self.nrhs), dataType)
             for i in range(self.nrhs):
-                self.readArray(fp, self.rhs[:,i], self.nrow, rhsfmt)
+                self._readArray(fp, self.rhs[:,i], self.nrow, rhsfmt)
         elif self.mxtype[2] == 'A':
             # Read sparse right-hand sides
             self.rhsptr = numpy.empty(self.nrhs+1, numpy.int)
             self.rhsind = numpy.empty(self.nrhsix, numpy.int)
             self.rhs    = numpy.empty(self.nrhsix, dataType)
-            self.readArray(fp, self.rhsptr, self.nrhs+1, ptrfmt)
-            self.readArray(fp, self.rhsind, self.nrhsix, indfmt)
-            self.readArray(fp, self.rhs,    self.nrhsix, rhsfmt)
+            self._readArray(fp, self.rhsptr, self.nrhs+1, ptrfmt)
+            self._readArray(fp, self.rhsind, self.nrhsix, indfmt)
+            self._readArray(fp, self.rhs,    self.nrhsix, rhsfmt)
             self.rhsind -= 1
             self.rhsptr -= 1
         else:
             # Read elemental right-hand sides
             self.rhs = numpy.empty((self.nnzero, self.nrhs), dataType)
             for i in range(self.nrhs):
-                self.readArray(fp, self.rhs[:,i], self.nnzero, rhsfmt)
+                self._readArray(fp, self.rhs[:,i], self.nnzero, rhsfmt)
 
         # Read initial guesses if requested (always dense)
         if self.readGuess and rhstyp[1] == 'G':
             self.guess = numpy.empty((self.nrow, self.nrhs), dataType)
             for i in range(self.nrhs):
-                self.readArray(fp, self.guess[:,i], self.nrow, rhsfmt)
+                self._readArray(fp, self.guess[:,i], self.nrow, rhsfmt)
 
         # Read solution vectors if requested (always dense)
         if self.readSol and rhstyp[2] == 'X':
             self.sol = numpy.empty((self.nrow, self.nrhs), dataType)
             for i in range(self.nrhs):
-                self.readArray(fp, self.sol[:,i], self.nrow, rhsfmt)
+                self._readArray(fp, self.sol[:,i], self.nrow, rhsfmt)
 
         return
 
@@ -242,9 +243,9 @@ class RutherfordBoeingData(HarwellBoeingMatrix):
         HarwellBoeingMatrix.__init__(self, fname, **kwargs)
         self.transposed = kwargs.get('transposed', False)
 
-    def readMatrix(self, fp, **kwargs):
+    def _readMatrix(self, fp, **kwargs):
         self.patternOnly = kwargs.get('patternOnly', False)
-        fRead = self.fortranRead
+        fRead = self._fortranRead
 
         # Read matrix header
         fp.seek(0)
@@ -273,10 +274,10 @@ class RutherfordBoeingData(HarwellBoeingMatrix):
             np1 = self.nvec + 1
             if self.mxtype[1:2] == 're': np1 = 2*self.nvec + 1
             self.ip = numpy.empty(np1, numpy.int)
-            self.readArray(fp, self.ip, np1, ptrfmt)
+            self._readArray(fp, self.ip, np1, ptrfmt)
 
             self.ind = numpy.empty(self.ne, numpy.int)
-            self.readArray(fp, self.ind, self.ne, indfmt)
+            self._readArray(fp, self.ind, self.ne, indfmt)
 
             # Adjust indices to be 0-based
             self.ip -= 1
@@ -290,7 +291,7 @@ class RutherfordBoeingData(HarwellBoeingMatrix):
             nreal = self.ne
             if self.neltvl > 0: nreal = self.neltvl
             self.val = numpy.empty(nreal, dtype=dataType)
-            self.readArray(fp, self.val, nreal, valfmt)
+            self._readArray(fp, self.val, nreal, valfmt)
 
         else:
 
@@ -310,11 +311,11 @@ class RutherfordBoeingData(HarwellBoeingMatrix):
                     auxfm = auxfm1
                 else:
                     self.ip = numpy.empty(nvec+1, numpy.int)
-                    self.readArray(fp, self.ip, nvec+1, auxfm1)
+                    self._readArray(fp, self.ip, nvec+1, auxfm1)
                     auxfm = auxfm2
                     self.ip -= 1 # Adjust to 0-based indexing
                 self.ind = numpy.empty(self.nauxd, numpy.int)
-                self.readArray(fp, self.ind, self.nauxd, auxfm)
+                self._readArray(fp, self.ind, self.nauxd, auxfm)
                 self.ind -= 1 # Adjust to 0-based indexing
                 if self.dattyp != 'rhs': return
 
@@ -332,7 +333,7 @@ class RutherfordBoeingData(HarwellBoeingMatrix):
             else:
                 auxfm = auxfm1
             self.val = numpy.empty(self.nauxd, dataType)
-            self.readArray(fp, self.val, self.nauxd, auxfm)
+            self._readArray(fp, self.val, self.nauxd, auxfm)
             self.nnzero = self.nauxd
 
         return
