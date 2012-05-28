@@ -148,6 +148,7 @@ class HarwellBoeingMatrix:
         (self.mxtype, self.nrow, self.ncol, self.nnzero, neltvl) = \
             fRead(fp.readline(), 'A3,11X,4I14')
         (ptrfmt, indfmt, valfmt, rhsfmt) = fRead(fp.readline(), '2A16,2A20')
+        self.shape = (self.nrow, self.ncol)
 
         # Decide whether matrix is symmetric and real or complex
         dataType = numpy.float
@@ -262,6 +263,7 @@ class RutherfordBoeingData(HarwellBoeingMatrix):
 
             self.nrow = self.m
             self.ncol = self.nvec
+            self.shape = (self.nrow, self.ncol)
             self.nnzero = self.ne
             self.issym = (self.mxtype[1]=='s')
             dataType = numpy.float
