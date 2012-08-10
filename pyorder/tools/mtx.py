@@ -8,7 +8,8 @@ See http://math.nist.gov/MatrixMarket for a description of this format.
 import numpy as np
 from string import atoi, atof
 
-class MatrixMarketMatrix:
+
+class MatrixMarketMatrix(object):
     """
     A MatrixMarketMatrix object represents a sparse matrix read from a file.
     This file must describe a sparse matrix in the MatrixMarket file format.
@@ -19,28 +20,32 @@ class MatrixMarketMatrix:
     """
 
     def __init__(self, fname, **kwargs):
-        self.comments= ''
+        self.comments = ''
         self.dtype = None
         self.irow = None
         self.jcol = None
         self.values = None
         self.nrow = self.ncol = self.nnz = 0
-        self.shape = (0,0)
+        self.shape = (0, 0)
         self.symmetric = self.Hermitian = self.skewsym = False
 
         fp = open(fname)
         pos = self._readHeader(fp)
-        nrecs = self._readData(fp,pos)
+        nrecs = self._readData(fp, pos)
         fp.close()
 
         if nrecs != self.nnz:
-            raise ValueError, 'Read %d records. Expected %d.' % (nrecs,self.nnz)
+            msg = 'Read %d records. Expected %d.' % (nrecs, self.nnz)
+            raise ValueError(msg)
+
+    def get_shape(self):
+        return self.shape
 
     def _readHeader(self, fp):
         fp.seek(0)
         hdr = fp.readline().split()
         if hdr[1] != 'matrix' or hdr[2] != 'coordinate':
-            raise TypeError, 'Type not supported: %s' % hdr[1:3]
+            raise TypeError('Type not supported: %s' % hdr[1:3])
 
         # Determine entries type
         dtypes = {'real': np.float,
@@ -73,7 +78,7 @@ class MatrixMarketMatrix:
         self.nrow = atoi(size[0])
         self.ncol = atoi(size[1])
         self.shape = (self.nrow, self.ncol)
-        self.nnz  = atoi(size[2])
+        self.nnz = atoi(size[2])
         self.irow = np.empty(self.nnz, dtype=np.int)
         self.jcol = np.empty(self.nnz, dtype=np.int)
 
@@ -84,14 +89,14 @@ class MatrixMarketMatrix:
         k = 0
         for line in fp.readlines():
             line = line.split()
-            self.irow[k] = atoi(line[0])-1
-            self.jcol[k] = atoi(line[1])-1
+            self.irow[k] = atoi(line[0]) - 1
+            self.jcol[k] = atoi(line[1]) - 1
             if self.dtype == np.int:
                 self.values[k] = atoi(line[2])
             elif self.dtype == np.float:
                 self.values[k] = atof(line[2])
             elif self.dtype == np.complex:
-                self.values[k] = complex(atof(line[2]),atof(line[3]))
+                self.values[k] = complex(atof(line[2]), atof(line[3]))
             k += 1
 
         return k
@@ -100,11 +105,11 @@ class MatrixMarketMatrix:
         """
         Return the sparse matrix in triple format (val,irow,jcol). If the
         matrix data type is `None`, i.e., only the matrix sparsity pattern
-        is available, this method returns (irow,jcol).
+        is available, this method returns (None,irow,jcol).
         """
         if self.dtype is not None:
-            return (self.values,self.irow,self.jcol)
-        return (self.irow,self.jcol)
+            return (self.values, self.irow, self.jcol)
+        return (None, self.irow, self.jcol)
 
 if __name__ == '__main__':
 
@@ -113,14 +118,16 @@ if __name__ == '__main__':
     A = MatrixMarketMatrix(fname)
     print 'type: ', A.dtype
     print 'symmetric, Hermitian, skew: ', A.symmetric, A.Hermitian, A.skewsym
-    print 'comments:' ; print A.comments
+    print 'comments:', A.comments
 
     from pyorder.tools.spy import FastSpy
     import matplotlib.pyplot as plt
+    vals, irow, jcol = A.find()
+    nrow, ncol = A.get_shape()
     fig = plt.figure()
-    FastSpy(A.nrow,A.ncol,A.irow,A.jcol,
+    FastSpy(A.nrow, A.ncol, A.irow, A.jcol,
             sym=(A.symmetric or A.Hermitian or A.skewsym),
-            #val=A.values,
+            val=vals,
             ax=fig.gca(),
             )
     plt.show()
