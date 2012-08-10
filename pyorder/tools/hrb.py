@@ -368,8 +368,7 @@ class RutherfordBoeingData(HarwellBoeingMatrix):
     def __mul__(self, other):
         if self.transposed:
             return self._rmul(other)
-        else:
-            return self._mul(other)
+        return self._mul(other)
 
 
 # Helper functions.
