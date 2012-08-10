@@ -17,6 +17,12 @@ class MatrixMarketMatrix(object):
     See http://math.nist.gov/MatrixMarket for more information.
 
     Example: mat = MatrixMarketMatrix('1138bus.mtx')
+
+    :keywords:
+        :transposed:  consider the matrix as transposed for matrix-vector
+                      products purposes. The shape and arrays of row and
+                      column indices will not reflect the transposed matrix
+                      but using the `*` operator will.
     """
 
     def __init__(self, fname, **kwargs):
@@ -28,6 +34,7 @@ class MatrixMarketMatrix(object):
         self.nrow = self.ncol = self.nnz = 0
         self.shape = (0, 0)
         self.symmetric = self.Hermitian = self.skewsym = False
+        self.transposed = kwargs.get('transposed', False)
 
         fp = open(fname)
         pos = self._readHeader(fp)
@@ -110,6 +117,36 @@ class MatrixMarketMatrix(object):
         if self.dtype is not None:
             return (self.values, self.irow, self.jcol)
         return (None, self.irow, self.jcol)
+
+    def _mul(self, other):
+        # No type or dimension checking for now...
+        y = np.zeros(self.nrow)
+        for k in xrange(self.nnz):
+            row = self.irow[k]
+            col = self.jcol[k]
+            val = self.values[k]
+            y[row] += val * other[col]
+            if self.symmetric and row != col:
+                y[col] += val * other[row]
+        return y
+
+    def _rmul(self, other):
+        # No type or dimension checking for now...
+        y = np.zeros(self.ncol)
+        for k in xrange(self.nnz):
+            row = self.jcol[k]
+            col = self.irow[k]
+            val = self.values[k]
+            y[row] += val * other[col]
+            if self.symmetric and row != col:
+                y[col] += val * other[row]
+        return y
+
+    def __mul__(self, other):
+        if self.transposed:
+            return self._rmul(other)
+        return self._mul(other)
+
 
 if __name__ == '__main__':
 
