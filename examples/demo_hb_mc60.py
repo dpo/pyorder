@@ -25,8 +25,9 @@ perm, rinfo = rcmk(M.nrow, M.ind, M.ip)
 # Or: Compute Sloan's ordering
 #perm, rinfo = sloan(M.nrow, M.ind, M.ip)
 
+
 # Plot original matrix
-(irow, jcol) = M.find()
+(_, irow, jcol) = M.find()
 left = pylab.subplot(121)
 FastSpy(M.nrow, M.ncol, irow, jcol, sym=M.issym,
         ax=left.get_axes(), title='Original')
