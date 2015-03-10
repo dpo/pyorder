@@ -27,7 +27,7 @@ print 'Number of nonzeros on diagonal after reordering: ', nzdiag
 try:
     from pyorder.tools.spy import FastSpy
     import pylab
-    (irow, jcol) = M.find()
+    (_, irow, jcol) = M.find()
     left = pylab.subplot(121)
     FastSpy(M.nrow, M.ncol, irow, jcol, sym=M.issym, ax=left.get_axes())
 

@@ -69,7 +69,7 @@ try:
     import pylab
     from pyorder.tools.spy import FastSpy
     # Plot original matrix
-    (irow, jcol) = M.find()
+    (_, irow, jcol) = M.find()
     left = pylab.subplot(121)
     right = pylab.subplot(122)
     FastSpy(M.nrow, M.ncol, irow, jcol, sym=M.issym,
